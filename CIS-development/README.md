@@ -15,7 +15,7 @@ The second one performs inference using pretrained models of nnU-Net. User can u
 
 ### Use the new segmentation method to simulate X-Ray image
 
-The `use_nnunet` module contains the following utilities:
+The `use_nnunet` module contains the following utilities: (this module is not in the current directory. it is merged with DeepDRR package.)
 
 `.read_mask(dir, LabelType)`: Read an existing segmentation mask with the corresponding label format of `LabelType`. Assign corresponding material property according to this mask when performing projection.
 
