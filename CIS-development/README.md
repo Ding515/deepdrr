@@ -13,6 +13,32 @@ The first one prepares CT images into the format suitable for nnU-Net. `type` ca
 
 The second one performs inference using pretrained models of nnU-Net. User can use `TaskType` to choose the paticular pretrained model.
 
+### Segmentation pipeline using CT-ORG Net
+This is the CT-ORG segmentation part based on NMDID dataset, two stages for segmentation:
+
+```./CT-ORG/torso_sample_collecting.py``` for specific data collection in general torso dataset
+
+```./CT-ORG/org_mask_batch.py``` for CT-ORG Net segmentation.
+
+### Merging
+Currently the mering part utilizes masks from nnUNet and CT-ORG Net.
+We assume the data is stored in the following format:
+
+```bash
+  --original_data
+  --CT-ORG mask
+  --nnUNet mask
+  --Merging result
+```
+Merging part requires the masks collected from CT-ORG and nnUNet and the original data. For each voxel, a label will be assigned based on previous segmentation result or CT values(into air or general soft tissue categories). And the merging masks will be stored in merging result folder. All of these four directories are required as input for this program.
+
+Output types for current merging mask is:
+```
+usion_dict = {1:'air',2:'bone', 3:'soft tissue',4:'liver',5:'bladder',6:'lung',7:'kidney',8:'spleen',
+               9:'gallbladder',10:'esophagus',11:'stomach'}
+```
+This is an one-channel mask specific for DeepDRR input.
+
 ### Use the new segmentation method to simulate X-Ray image
 
 The `use_nnunet` module contains the following utilities: (this module is not in the current directory. it is merged with DeepDRR package.)
